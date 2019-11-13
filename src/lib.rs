@@ -18,6 +18,7 @@ pub struct Model {
     board: CatalogGrouped,
     discover: CatalogFiltered<MetaPreview>,
     addons: CatalogFiltered<DescriptorPreview>,
+    library: LibItems,
     streaming_server_settings: StreamingServerSettingsModel,
 }
 
