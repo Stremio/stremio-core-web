@@ -16,6 +16,7 @@ pub struct Model {
     ctx: Ctx<Env>,
     recent: LibRecent,
     board: CatalogGrouped,
+    search: CatalogGrouped,
     discover: CatalogFiltered<MetaPreview>,
     addons: CatalogFiltered<DescriptorPreview>,
     streaming_server_settings: StreamingServerSettingsModel,
