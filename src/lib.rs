@@ -3,6 +3,8 @@ use futures::future;
 use futures::stream::Stream;
 use serde::{Deserialize, Serialize};
 use stremio_core::state_types::*;
+use stremio_core::state_types::models::*;
+use stremio_core::state_types::messages::*;
 use stremio_core::types::addons::DescriptorPreview;
 use stremio_core::types::MetaPreview;
 use stremio_derive::*;
@@ -15,8 +17,8 @@ use std::panic;
 pub struct Model {
     ctx: Ctx<Env>,
     recent: LibRecent,
-    board: CatalogGrouped,
-    search: CatalogGrouped,
+    board: CatalogsGrouped,
+    search: CatalogsGrouped,
     discover: CatalogFiltered<MetaPreview>,
     addons: CatalogFiltered<DescriptorPreview>,
     streaming_server_settings: StreamingServerSettingsModel,
