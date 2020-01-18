@@ -19,4 +19,10 @@ jobs:
             eval "$(ssh-agent -s)"
             ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
             ssh-add
-            rustup default nightly && cargo install wasm-pack && yarn install && yarn build
+            ssh-add -L
+            cat ~/.gitconfig
+            rustup default nightly
+            cargo --version
+            cargo install wasm-pack
+            yarn install
+            yarn build
