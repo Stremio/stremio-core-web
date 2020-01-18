@@ -12,12 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v1
-        - name: start ssh-agent
-          uses: webfactory/ssh-agent@v0.2.0
-          with:
-            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         - name: Build
           run: |
             mkdir -p build
             mkdir -p static
+            eval "$(ssh-agent -s)"
+            ssh-add
             rustup default nightly && cargo install wasm-pack && yarn install && yarn build
