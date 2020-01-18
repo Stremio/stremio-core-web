@@ -18,7 +18,7 @@ jobs:
             mkdir -p static
             eval "$(ssh-agent -s)"
             ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
-            ssh-add
+            ssh-add ~/.ssh/id_rsa
             ssh-add -L
             cat ~/.gitconfig
             rustup default nightly
