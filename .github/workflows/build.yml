@@ -14,7 +14,6 @@ jobs:
         - uses: actions/checkout@v1
         - name: Build
           run: |
-            echo -e "[url \"https://github.com/\"]\n\tinsteadOf = ssh://git@github.com/" > ~/.gitconfig
             mkdir -p build
             mkdir -p static
             rustup default nightly && cargo install wasm-pack && yarn install && yarn build
