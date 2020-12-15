@@ -5,6 +5,7 @@ use futures::{future, Future, FutureExt, TryFutureExt};
 use http::{Method, Request};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use stremio_core::runtime::msg::{Action, ActionCtx};
 use stremio_core::runtime::{Env, EnvError, EnvFuture};
 use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::{spawn_local, JsFuture};
@@ -87,6 +88,41 @@ impl Env for WebEnv {
     #[cfg(debug_assertions)]
     fn log(message: String) {
         web_sys::console::log_1(&JsValue::from(message));
+    }
+}
+
+#[derive(Debug, Serialize)]
+pub struct AnalyticsMessage {
+    name: String,
+    app_context: serde_json::Map<String, serde_json::Value>,
+}
+
+pub fn analytics_context(action: &JsValue) -> Option<AnalyticsMessage> {
+    let deserialized_action = JsValue::into_serde(action);
+    match deserialized_action {
+        Ok(unwraped_action) => match unwraped_action {
+            Action::Ctx(action_ctx) => match action_ctx {
+                ActionCtx::InstallAddon(descriptor) => Some(AnalyticsMessage {
+                    name: "installAddon".to_string(),
+                    app_context: vec![(
+                        "url".to_owned(),
+                        serde_json::Value::String(
+                            web_sys::window()
+                                .expect("window is not available")
+                                .location()
+                                .href()
+                                .unwrap(),
+                        ),
+                    )]
+                    .iter()
+                    .cloned()
+                    .collect(),
+                }),
+                _ => None,
+            },
+            _ => None,
+        },
+        _ => None,
     }
 }
 
