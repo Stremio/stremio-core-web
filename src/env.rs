@@ -118,6 +118,16 @@ pub fn analytics_context(action: &JsValue) -> Option<AnalyticsMessage> {
                     .cloned()
                     .collect(),
                 }),
+                ActionCtx::UninstallAddon(url) => Some(AnalyticsMessage {
+                    name: "uninstallAddon".to_string(),
+                    app_context: vec![(
+                        "url".to_owned(),
+                        serde_json::Value::String(url.to_string()),
+                    )]
+                    .iter()
+                    .cloned()
+                    .collect(),
+                }),
                 _ => None,
             },
             _ => None,
