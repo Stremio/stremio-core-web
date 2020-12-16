@@ -128,6 +128,10 @@ pub fn analytics_context(action: &JsValue) -> Option<AnalyticsMessage> {
                     .cloned()
                     .collect(),
                 }),
+                ActionCtx::Logout => Some(AnalyticsMessage {
+                    name: "logout".to_string(),
+                    app_context: vec![].iter().cloned().collect(),
+                }),
                 _ => None,
             },
             _ => None,
