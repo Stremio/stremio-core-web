@@ -102,6 +102,10 @@ pub fn analytics_context(action: &JsValue) -> Option<AnalyticsMessage> {
     match deserialized_action {
         Ok(unwraped_action) => match unwraped_action {
             Action::Ctx(action_ctx) => match action_ctx {
+                ActionCtx::Authenticate(login) => Some(AnalyticsMessage {
+                    name: "login".to_string(),
+                    app_context: vec![].iter().cloned().collect(),
+                }),
                 ActionCtx::InstallAddon(descriptor) => Some(AnalyticsMessage {
                     name: "installAddon".to_string(),
                     app_context: vec![(
