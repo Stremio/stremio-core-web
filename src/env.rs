@@ -132,6 +132,10 @@ pub fn analytics_context(action: &JsValue) -> Option<AnalyticsMessage> {
                     .cloned()
                     .collect(),
                 }),
+                ActionCtx::UpdateSettings(_) => Some(AnalyticsMessage {
+                    name: "updateSettings".to_string(),
+                    app_context: vec![].iter().cloned().collect(),
+                }),
                 ActionCtx::Logout => Some(AnalyticsMessage {
                     name: "logout".to_string(),
                     app_context: vec![].iter().cloned().collect(),
