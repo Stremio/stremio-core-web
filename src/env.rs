@@ -6,7 +6,7 @@ use http::{Method, Request};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use stremio_core::runtime::msg::{Action, ActionCtx};
-use stremio_core::runtime::{Env, EnvError, EnvFuture};
+use stremio_core::runtime::{AnalyticsMessage, Env, EnvError, EnvFuture};
 use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::{spawn_local, JsFuture};
 
@@ -89,62 +89,55 @@ impl Env for WebEnv {
     fn log(message: String) {
         web_sys::console::log_1(&JsValue::from(message));
     }
-}
-
-#[derive(Debug, Serialize)]
-pub struct AnalyticsMessage {
-    name: String,
-    app_context: serde_json::Map<String, serde_json::Value>,
-}
-
-pub fn analytics_context(action: &JsValue) -> Option<AnalyticsMessage> {
-    let deserialized_action = JsValue::into_serde(action);
-    match deserialized_action {
-        Ok(unwraped_action) => match unwraped_action {
-            Action::Ctx(action_ctx) => match action_ctx {
-                ActionCtx::Authenticate(login) => Some(AnalyticsMessage {
-                    name: "login".to_string(),
-                    app_context: vec![].iter().cloned().collect(),
-                }),
-                ActionCtx::InstallAddon(descriptor) => Some(AnalyticsMessage {
-                    name: "installAddon".to_string(),
-                    app_context: vec![(
-                        "url".to_owned(),
-                        serde_json::Value::String(
-                            web_sys::window()
-                                .expect("window is not available")
-                                .location()
-                                .href()
-                                .unwrap(),
-                        ),
-                    )]
-                    .iter()
-                    .cloned()
-                    .collect(),
-                }),
-                ActionCtx::UninstallAddon(url) => Some(AnalyticsMessage {
-                    name: "uninstallAddon".to_string(),
-                    app_context: vec![(
-                        "url".to_owned(),
-                        serde_json::Value::String(url.to_string()),
-                    )]
-                    .iter()
-                    .cloned()
-                    .collect(),
-                }),
-                ActionCtx::UpdateSettings(_) => Some(AnalyticsMessage {
-                    name: "updateSettings".to_string(),
-                    app_context: vec![].iter().cloned().collect(),
-                }),
-                ActionCtx::Logout => Some(AnalyticsMessage {
-                    name: "logout".to_string(),
-                    app_context: vec![].iter().cloned().collect(),
-                }),
+    fn analytics_context(action: JsValue) -> Option<AnalyticsMessage> {
+        let deserialized_action = JsValue::into_serde(&action);
+        match deserialized_action {
+            Ok(unwraped_action) => match unwraped_action {
+                Action::Ctx(action_ctx) => match action_ctx {
+                    ActionCtx::Authenticate(_) => Some(AnalyticsMessage {
+                        name: "login".to_string(),
+                        app_context: vec![].iter().cloned().collect(),
+                    }),
+                    ActionCtx::InstallAddon(_) => Some(AnalyticsMessage {
+                        name: "installAddon".to_string(),
+                        app_context: vec![(
+                            "url".to_owned(),
+                            serde_json::Value::String(
+                                web_sys::window()
+                                    .expect("window is not available")
+                                    .location()
+                                    .href()
+                                    .unwrap(),
+                            ),
+                        )]
+                        .iter()
+                        .cloned()
+                        .collect(),
+                    }),
+                    ActionCtx::UninstallAddon(url) => Some(AnalyticsMessage {
+                        name: "uninstallAddon".to_string(),
+                        app_context: vec![(
+                            "url".to_owned(),
+                            serde_json::Value::String(url.to_string()),
+                        )]
+                        .iter()
+                        .cloned()
+                        .collect(),
+                    }),
+                    ActionCtx::UpdateSettings(_) => Some(AnalyticsMessage {
+                        name: "updateSettings".to_string(),
+                        app_context: vec![].iter().cloned().collect(),
+                    }),
+                    ActionCtx::Logout => Some(AnalyticsMessage {
+                        name: "logout".to_string(),
+                        app_context: vec![].iter().cloned().collect(),
+                    }),
+                    _ => None,
+                },
                 _ => None,
             },
             _ => None,
-        },
-        _ => None,
+        }
     }
 }
 

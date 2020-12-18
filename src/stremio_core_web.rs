@@ -90,6 +90,7 @@ pub fn get_state(field: &JsValue) -> JsValue {
 
 #[wasm_bindgen]
 pub fn dispatch(action: &JsValue, field: &JsValue) {
+    WebEnv::analytics_context(action.to_owned());
     match &*RUNTIME.read().expect("runtime read failed") {
         Some(Loadable::Ready(runtime)) => match (action.into_serde(), field.into_serde()) {
             (Ok(action), Ok(field)) => {
