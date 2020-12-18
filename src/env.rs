@@ -136,6 +136,10 @@ impl Env for WebEnv {
                         name: "addToLibrary".to_string(),
                         app_context: vec![].iter().cloned().collect(),
                     }),
+                    ActionCtx::RemoveFromLibrary(_) => Some(AnalyticsMessage {
+                        name: "removeFromLibrary".to_string(),
+                        app_context: vec![].iter().cloned().collect(),
+                    }),
                     _ => None,
                 },
                 _ => None,
