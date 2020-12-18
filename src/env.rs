@@ -132,6 +132,10 @@ impl Env for WebEnv {
                         name: "logout".to_string(),
                         app_context: vec![].iter().cloned().collect(),
                     }),
+                    ActionCtx::AddToLibrary(_) => Some(AnalyticsMessage {
+                        name: "addToLibrary".to_string(),
+                        app_context: vec![].iter().cloned().collect(),
+                    }),
                     _ => None,
                 },
                 _ => None,
