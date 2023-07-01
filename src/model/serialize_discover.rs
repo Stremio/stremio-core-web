@@ -1,5 +1,6 @@
 use crate::model::deep_links_ext::DeepLinksExt;
 use boolinator::Boolinator;
+use itertools::Itertools;
 use serde::Serialize;
 use stremio_core::deep_links::{DiscoverDeepLinks, MetaItemDeepLinks, StreamDeepLinks};
 use stremio_core::models::catalog_with_filters::{
@@ -200,6 +201,7 @@ pub fn serialize_discover(
                                     .into_web_deep_links(),
                                 })
                             })
+                            .unique_by(|model::MetaItemPreview { meta_item, .. }| &meta_item.id)
                             .collect::<Vec<_>>(),
                     ),
                     Some(Loadable::Loading) | None => Loadable::Loading,
