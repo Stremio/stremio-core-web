@@ -809,7 +809,7 @@ dependencies = [
 [[package]]
 name = "stremio-analytics"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=development#08e668ce7456166912b2caffeb7082fcbb0f238e"
+source = "git+https://github.com/unclekingpin/stremio-core?branch=override-meta-details-selected#8733482cdfefbe53d7a3570297fe589979a99829"
 dependencies = [
  "derivative",
  "enclose",
@@ -822,7 +822,7 @@ dependencies = [
 [[package]]
 name = "stremio-core"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=development#08e668ce7456166912b2caffeb7082fcbb0f238e"
+source = "git+https://github.com/unclekingpin/stremio-core?branch=override-meta-details-selected#8733482cdfefbe53d7a3570297fe589979a99829"
 dependencies = [
  "anyhow",
  "base64 0.21.2",
@@ -860,7 +860,7 @@ dependencies = [
 
 [[package]]
 name = "stremio-core-web"
-version = "0.44.17"
+version = "0.44.18"
 dependencies = [
  "Inflector",
  "boolinator",
@@ -895,7 +895,7 @@ dependencies = [
 [[package]]
 name = "stremio-derive"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=development#08e668ce7456166912b2caffeb7082fcbb0f238e"
+source = "git+https://github.com/unclekingpin/stremio-core?branch=override-meta-details-selected#8733482cdfefbe53d7a3570297fe589979a99829"
 dependencies = [
  "case",
  "proc-macro-crate",
@@ -925,7 +925,7 @@ dependencies = [
 [[package]]
 name = "stremio-watched-bitfield"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=development#08e668ce7456166912b2caffeb7082fcbb0f238e"
+source = "git+https://github.com/unclekingpin/stremio-core?branch=override-meta-details-selected#8733482cdfefbe53d7a3570297fe589979a99829"
 dependencies = [
  "base64 0.13.1",
  "flate2",

@@ -26,10 +26,11 @@ use stremio_core::types::api::LinkAuthKey;
 use stremio_core::types::library::LibraryBucket;
 use stremio_core::types::profile::Profile;
 use stremio_core::types::resource::MetaItemPreview;
+use stremio_core::types::streams::StreamsBucket;
 use stremio_derive::Model;
 use wasm_bindgen::JsValue;
 
-#[derive(Model)]
+#[derive(Model, Clone)]
 #[cfg_attr(debug_assertions, derive(Serialize))]
 #[model(WebEnv)]
 pub struct WebModel {
@@ -51,7 +52,11 @@ pub struct WebModel {
 }
 
 impl WebModel {
-    pub fn new(profile: Profile, library: LibraryBucket) -> (WebModel, Effects) {
+    pub fn new(
+        profile: Profile,
+        library: LibraryBucket,
+        streams: StreamsBucket,
+    ) -> (WebModel, Effects) {
         let (continue_watching_preview, continue_watching_preview_effects) =
             ContinueWatchingPreview::new(&library);
         let (discover, discover_effects) = CatalogWithFilters::<MetaItemPreview>::new(&profile);
@@ -64,7 +69,7 @@ impl WebModel {
             InstalledAddonsWithFilters::new(&profile);
         let (streaming_server, streaming_server_effects) = StreamingServer::new::<WebEnv>(&profile);
         let model = WebModel {
-            ctx: Ctx::new(profile, library),
+            ctx: Ctx::new(profile, library, streams),
             auth_link: Default::default(),
             data_export: Default::default(),
             continue_watching_preview,
