@@ -12,9 +12,9 @@ lto = true
 opt-level = 's'
 
 [dependencies]
-stremio-core = { git = "https://github.com/unclekingpin/stremio-core", branch = "override-meta-details-selected" }
-stremio-derive = { git = "https://github.com/unclekingpin/stremio-core", branch = "override-meta-details-selected" }
-stremio-analytics = { git = "https://github.com/unclekingpin/stremio-core", branch = "override-meta-details-selected" }
+stremio-core = { git = "https://github.com/Stremio/stremio-core", branch = "development" }
+stremio-derive = { git = "https://github.com/Stremio/stremio-core", branch = "development" }
+stremio-analytics = { git = "https://github.com/Stremio/stremio-core", branch = "development" }
 serde = { version = "1.0.*", features = ["derive"] }
 serde_json = "1.0.*"
 futures = "0.3.*"
