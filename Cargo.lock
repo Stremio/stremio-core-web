@@ -940,7 +940,7 @@ dependencies = [
 [[package]]
 name = "stremio-core"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=feat/update-last-watched-on-mark-actions#c6d91bb3f54485f9328b43340434f0feca4554c4"
+source = "git+https://github.com/Stremio/stremio-core?branch=feat/update-last-watched-on-mark-actions#9b03e1879d4c0093ca09645cec0d5375f36a1a16"
 dependencies = [
  "anyhow",
  "base64 0.21.2",
@@ -1015,7 +1015,7 @@ dependencies = [
 [[package]]
 name = "stremio-derive"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=feat/update-last-watched-on-mark-actions#c6d91bb3f54485f9328b43340434f0feca4554c4"
+source = "git+https://github.com/Stremio/stremio-core?branch=feat/update-last-watched-on-mark-actions#9b03e1879d4c0093ca09645cec0d5375f36a1a16"
 dependencies = [
  "case",
  "proc-macro-crate",
@@ -1045,7 +1045,7 @@ dependencies = [
 [[package]]
 name = "stremio-watched-bitfield"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=feat/update-last-watched-on-mark-actions#c6d91bb3f54485f9328b43340434f0feca4554c4"
+source = "git+https://github.com/Stremio/stremio-core?branch=feat/update-last-watched-on-mark-actions#9b03e1879d4c0093ca09645cec0d5375f36a1a16"
 dependencies = [
  "base64 0.13.1",
  "flate2",
