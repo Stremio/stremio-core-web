@@ -940,7 +940,7 @@ dependencies = [
 [[package]]
 name = "stremio-core"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=development#1259c0c2963417bb54077f570889073278368783"
+source = "git+https://github.com/Stremio/stremio-core?branch=detach-video-params-from-selected#058c5226ce16ba30e84763ede62475501b5a0436"
 dependencies = [
  "anyhow",
  "base64 0.21.2",
@@ -1015,7 +1015,7 @@ dependencies = [
 [[package]]
 name = "stremio-derive"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=development#1259c0c2963417bb54077f570889073278368783"
+source = "git+https://github.com/Stremio/stremio-core?branch=detach-video-params-from-selected#058c5226ce16ba30e84763ede62475501b5a0436"
 dependencies = [
  "case",
  "proc-macro-crate",
@@ -1045,7 +1045,7 @@ dependencies = [
 [[package]]
 name = "stremio-watched-bitfield"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=development#1259c0c2963417bb54077f570889073278368783"
+source = "git+https://github.com/Stremio/stremio-core?branch=detach-video-params-from-selected#058c5226ce16ba30e84763ede62475501b5a0436"
 dependencies = [
  "base64 0.13.1",
  "flate2",
