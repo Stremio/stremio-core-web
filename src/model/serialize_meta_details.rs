@@ -126,10 +126,6 @@ pub fn serialize_meta_details(
     } else {
         meta_details.meta_streams.iter()
     };
-    let streaming_server_url = match streaming_server.base_url.clone() {
-        Loadable::Ready(url) => Some(url),
-        _ => None,
-    };
     JsValue::from_serde(&model::MetaDetails {
         selected: &meta_details.selected,
         meta_item: meta_item
@@ -175,7 +171,6 @@ pub fn serialize_meta_details(
                                 deep_links: VideoDeepLinks::from((
                                     video,
                                     request,
-                                    &streaming_server_url,
                                     &ctx.profile.settings,
                                 ))
                                 .into_web_deep_links(),
@@ -190,7 +185,6 @@ pub fn serialize_meta_details(
                                 progress: None,
                                 deep_links: StreamDeepLinks::from((
                                     stream,
-                                    &streaming_server_url,
                                     &ctx.profile.settings,
                                 ))
                                 .into_web_deep_links(),
@@ -263,7 +257,6 @@ pub fn serialize_meta_details(
                                         || {
                                             StreamDeepLinks::from((
                                                 stream,
-                                                &streaming_server_url,
                                                 &ctx.profile.settings,
                                             ))
                                         },
@@ -272,7 +265,6 @@ pub fn serialize_meta_details(
                                                 stream,
                                                 request,
                                                 &meta_item.request,
-                                                &streaming_server_url,
                                                 &ctx.profile.settings,
                                             ))
                                         },

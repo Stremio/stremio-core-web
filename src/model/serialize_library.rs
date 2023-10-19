@@ -60,7 +60,6 @@ mod model {
 pub fn serialize_library<F>(
     library: &LibraryWithFilters<F>,
     streams_bucket: &StreamsBucket,
-    streaming_server_url: Option<&Url>,
     settings: &Settings,
     root: String,
 ) -> JsValue {
@@ -135,7 +134,6 @@ pub fn serialize_library<F>(
                     deep_links: LibraryItemDeepLinks::from((
                         library_item,
                         streams_item,
-                        streaming_server_url,
                         settings,
                     ))
                     .into_web_deep_links(),

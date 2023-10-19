@@ -9,13 +9,11 @@ use stremio_core::{
 pub fn serialize_continue_watching_preview(
     continue_watching_preview: &ContinueWatchingPreview,
     streams_bucket: &StreamsBucket,
-    streaming_server_url: Option<&Url>,
     settings: &Settings,
 ) -> JsValue {
     JsValue::from_serde(&model::ContinueWatchingPreview::from((
         continue_watching_preview,
         streams_bucket,
-        streaming_server_url,
         settings,
     )))
     .unwrap()
@@ -47,15 +45,13 @@ mod model {
         From<(
             &'a stremio_core::models::continue_watching_preview::ContinueWatchingPreview,
             &StreamsBucket,
-            Option<&Url>,
             &Settings,
         )> for ContinueWatchingPreview<'a>
     {
         fn from(
-            (continue_watching_preview, streams_bucket, streaming_server_url, settings): (
+            (continue_watching_preview, streams_bucket, settings): (
                 &'a stremio_core::models::continue_watching_preview::ContinueWatchingPreview,
                 &StreamsBucket,
-                Option<&Url>,
                 &Settings,
             ),
         ) -> Self {
@@ -79,7 +75,6 @@ mod model {
                         Item::from((
                             core_cw_item,
                             library_item_stream,
-                            streaming_server_url,
                             settings,
                         ))
                     })
@@ -103,15 +98,13 @@ mod model {
         From<(
             &'a stremio_core::models::continue_watching_preview::Item,
             Option<&StreamsItem>,
-            Option<&Url>,
             &Settings,
         )> for Item<'a>
     {
         fn from(
-            (item, stream_item, streaming_server_url, settings): (
+            (item, stream_item, settings): (
                 &'a stremio_core::models::continue_watching_preview::Item,
                 Option<&StreamsItem>,
-                Option<&Url>,
                 &Settings,
             ),
         ) -> Self {
@@ -119,7 +112,6 @@ mod model {
                 library_item: LibraryItem::from((
                     &item.library_item,
                     stream_item,
-                    streaming_server_url,
                     settings,
                 )),
                 notifications: item.notifications,
@@ -145,15 +137,13 @@ mod model {
         From<(
             &'a stremio_core::types::library::LibraryItem,
             Option<&StreamsItem>,
-            Option<&Url>,
             &Settings,
         )> for LibraryItem<'a>
     {
         fn from(
-            (library_item, streams_item, streaming_server_url, settings): (
+            (library_item, streams_item, settings): (
                 &'a stremio_core::types::library::LibraryItem,
                 Option<&StreamsItem>,
-                Option<&Url>,
                 &Settings,
             ),
         ) -> Self {
@@ -176,7 +166,6 @@ mod model {
                 deep_links: LibraryItemDeepLinks::from((
                     library_item,
                     streams_item,
-                    streaming_server_url,
                     settings,
                 ))
                 .into_web_deep_links(),
