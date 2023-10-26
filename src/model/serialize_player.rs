@@ -6,7 +6,6 @@ use stremio_core::deep_links::{StreamDeepLinks, VideoDeepLinks};
 use stremio_core::models::common::{Loadable, ResourceError, ResourceLoadable};
 use stremio_core::models::ctx::Ctx;
 use stremio_core::models::player::Player;
-use stremio_core::models::streaming_server::StreamingServer;
 use stremio_core::runtime::Env;
 use stremio_core::types::addon::{ResourcePath, ResourceRequest};
 use url::Url;
@@ -100,7 +99,7 @@ mod model {
     }
 }
 
-pub fn serialize_player(player: &Player, ctx: &Ctx, streaming_server: &StreamingServer) -> JsValue {
+pub fn serialize_player(player: &Player, ctx: &Ctx) -> JsValue {
     JsValue::from_serde(&model::Player {
         selected: player.selected.as_ref().map(|selected| model::Selected {
             stream: model::Stream {

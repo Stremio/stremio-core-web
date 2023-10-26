@@ -123,7 +123,7 @@ impl WebModel {
             ),
             WebModelField::Board => serialize_catalogs_with_extra(&self.board, &self.ctx),
             WebModelField::Discover => {
-                serialize_discover(&self.discover, &self.ctx, &self.streaming_server)
+                serialize_discover(&self.discover, &self.ctx)
             }
             WebModelField::Library => serialize_library(
                 &self.library,
@@ -140,14 +140,14 @@ impl WebModel {
             WebModelField::Search => serialize_catalogs_with_extra(&self.search, &self.ctx),
             WebModelField::LocalSearch => serialize_local_search(&self.local_search),
             WebModelField::MetaDetails => {
-                serialize_meta_details(&self.meta_details, &self.ctx, &self.streaming_server)
+                serialize_meta_details(&self.meta_details, &self.ctx)
             }
             WebModelField::RemoteAddons => serialize_remote_addons(&self.remote_addons, &self.ctx),
             WebModelField::InstalledAddons => serialize_installed_addons(&self.installed_addons),
             WebModelField::AddonDetails => JsValue::from_serde(&self.addon_details).unwrap(),
             WebModelField::StreamingServer => serialize_streaming_server(&self.streaming_server),
             WebModelField::Player => {
-                serialize_player(&self.player, &self.ctx, &self.streaming_server)
+                serialize_player(&self.player, &self.ctx)
             }
         }
     }

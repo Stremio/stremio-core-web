@@ -14,7 +14,6 @@ use stremio_core::{
         common::{Loadable, ResourceError, ResourceLoadable},
         ctx::Ctx,
         meta_details::{MetaDetails, Selected as MetaDetailsSelected},
-        streaming_server::StreamingServer,
     },
     runtime::Env,
     types::library::LibraryItem,
@@ -100,7 +99,6 @@ mod model {
 pub fn serialize_meta_details(
     meta_details: &MetaDetails,
     ctx: &Ctx,
-    streaming_server: &StreamingServer,
 ) -> JsValue {
     let meta_item = meta_details
         .meta_items

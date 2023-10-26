@@ -1,4 +1,3 @@
-use url::Url;
 use wasm_bindgen::JsValue;
 
 use stremio_core::{

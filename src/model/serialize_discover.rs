@@ -10,7 +10,6 @@ use stremio_core::models::catalog_with_filters::{
 };
 use stremio_core::models::common::Loadable;
 use stremio_core::models::ctx::Ctx;
-use stremio_core::models::streaming_server::StreamingServer;
 use stremio_core::types::resource::MetaItemPreview;
 
 use crate::model::deep_links_ext::DeepLinksExt;
@@ -99,7 +98,6 @@ mod model {
 pub fn serialize_discover(
     discover: &CatalogWithFilters<MetaItemPreview>,
     ctx: &Ctx,
-    streaming_server: &StreamingServer,
 ) -> JsValue {
     JsValue::from_serde(&model::CatalogWithFilters {
         selected: &discover.selected,
