@@ -944,7 +944,7 @@ dependencies = [
 [[package]]
 name = "stremio-core"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=feat/seek-history#61302b12476ff41e064277f896bbea97505c912a"
+source = "git+https://github.com/Stremio/stremio-core?branch=feat/seek-history#e24d79d667bc63334ec03364ec4a8b962d223f27"
 dependencies = [
  "anyhow",
  "base64 0.21.2",
@@ -1020,7 +1020,7 @@ dependencies = [
 [[package]]
 name = "stremio-derive"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=feat/seek-history#61302b12476ff41e064277f896bbea97505c912a"
+source = "git+https://github.com/Stremio/stremio-core?branch=feat/seek-history#e24d79d667bc63334ec03364ec4a8b962d223f27"
 dependencies = [
  "case",
  "proc-macro-crate",
@@ -1050,7 +1050,7 @@ dependencies = [
 [[package]]
 name = "stremio-watched-bitfield"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=feat/seek-history#61302b12476ff41e064277f896bbea97505c912a"
+source = "git+https://github.com/Stremio/stremio-core?branch=feat/seek-history#e24d79d667bc63334ec03364ec4a8b962d223f27"
 dependencies = [
  "base64 0.13.1",
  "flate2",
