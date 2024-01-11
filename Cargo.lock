@@ -944,7 +944,7 @@ dependencies = [
 [[package]]
 name = "stremio-core"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=fix/addons-lastVideosIds-aggregate-request#60b2ff2790f40a251d96eae9a38c091f6f8762b7"
+source = "git+https://github.com/Stremio/stremio-core?branch=fix/addons-lastVideosIds-aggregate-request#fdcf9e299c78c086228fbc03dd2319488c76ffe9"
 dependencies = [
  "anyhow",
  "base64 0.21.2",
@@ -1020,7 +1020,7 @@ dependencies = [
 [[package]]
 name = "stremio-derive"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=fix/addons-lastVideosIds-aggregate-request#60b2ff2790f40a251d96eae9a38c091f6f8762b7"
+source = "git+https://github.com/Stremio/stremio-core?branch=fix/addons-lastVideosIds-aggregate-request#fdcf9e299c78c086228fbc03dd2319488c76ffe9"
 dependencies = [
  "case",
  "proc-macro-crate",
@@ -1050,7 +1050,7 @@ dependencies = [
 [[package]]
 name = "stremio-watched-bitfield"
 version = "0.1.0"
-source = "git+https://github.com/Stremio/stremio-core?branch=fix/addons-lastVideosIds-aggregate-request#60b2ff2790f40a251d96eae9a38c091f6f8762b7"
+source = "git+https://github.com/Stremio/stremio-core?branch=fix/addons-lastVideosIds-aggregate-request#fdcf9e299c78c086228fbc03dd2319488c76ffe9"
 dependencies = [
  "base64 0.13.1",
  "flate2",
