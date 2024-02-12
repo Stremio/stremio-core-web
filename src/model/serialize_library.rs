@@ -3,7 +3,7 @@ use gloo_utils::format::JsValueSerdeExt;
 use serde::Serialize;
 use stremio_core::deep_links::{LibraryDeepLinks, LibraryItemDeepLinks};
 use stremio_core::models::ctx::Ctx;
-use stremio_core::models::library_with_filters::{LibraryWithFilters, Selected, Sort, StateFilter};
+use stremio_core::models::library_with_filters::{LibraryWithFilters, Selected, Sort, Watched};
 use stremio_core::types::resource::PosterShape;
 use stremio_core::types::streams::StreamsItemKey;
 use url::Url;
@@ -42,8 +42,8 @@ mod model {
 
     #[derive(Serialize)]
     #[serde(rename_all = "camelCase")]
-    pub struct SelectableStateFilter<'a> {
-        pub stateFilter: &'a StateFilter,
+    pub struct SelectableWatched<'a> {
+        pub watched: &'a Watched,
         pub selected: &'a bool,
         pub deep_links: LibraryDeepLinks,
     }
@@ -57,7 +57,7 @@ mod model {
     pub struct Selectable<'a> {
         pub types: Vec<SelectableType<'a>>,
         pub sorts: Vec<SelectableSort<'a>>,
-        pub stateFilters: Vec<SelectableStateFilter<'a>>,
+        pub watcheds: Vec<SelectableWatched<'a>>,
         pub prev_page: Option<SelectablePage>,
         pub next_page: Option<SelectablePage>,
     }
@@ -100,14 +100,14 @@ pub fn serialize_library<F>(
                         .into_web_deep_links(),
                 })
                 .collect(),
-            stateFilters: library
+            watcheds: library
                 .selectable
-                .stateFilters
+                .watcheds
                 .iter()
-                .map(|selectable_stateFilter| model::SelectableStateFilter {
-                    stateFilter: &selectable_stateFilter.stateFilter,
-                    selected: &selectable_stateFilter.selected,
-                    deep_links: LibraryDeepLinks::from((&root, &selectable_stateFilter.request))
+                .map(|selectable_watched| model::SelectableWatched {
+                    watched: &selectable_watched.watched,
+                    selected: &selectable_watched.selected,
+                    deep_links: LibraryDeepLinks::from((&root, &selectable_watched.request))
                         .into_web_deep_links(),
                 })
                 .collect(),
