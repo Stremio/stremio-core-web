@@ -3,7 +3,7 @@ use gloo_utils::format::JsValueSerdeExt;
 use serde::Serialize;
 use stremio_core::deep_links::{LibraryDeepLinks, LibraryItemDeepLinks};
 use stremio_core::models::ctx::Ctx;
-use stremio_core::models::library_with_filters::{LibraryWithFilters, Selected, Sort};
+use stremio_core::models::library_with_filters::{LibraryWithFilters, Selected, Sort, StateFilter};
 use stremio_core::types::resource::PosterShape;
 use stremio_core::types::streams::StreamsItemKey;
 use url::Url;
@@ -39,6 +39,14 @@ mod model {
         pub selected: &'a bool,
         pub deep_links: LibraryDeepLinks,
     }
+
+    #[derive(Serialize)]
+    #[serde(rename_all = "camelCase")]
+    pub struct SelectableStateFilter<'a> {
+        pub stateFilter: &'a StateFilter,
+        pub selected: &'a bool,
+        pub deep_links: LibraryDeepLinks,
+    }
     #[derive(Serialize)]
     #[serde(rename_all = "camelCase")]
     pub struct SelectablePage {
@@ -49,6 +57,7 @@ mod model {
     pub struct Selectable<'a> {
         pub types: Vec<SelectableType<'a>>,
         pub sorts: Vec<SelectableSort<'a>>,
+        pub stateFilters: Vec<SelectableStateFilter<'a>>,
         pub prev_page: Option<SelectablePage>,
         pub next_page: Option<SelectablePage>,
     }
@@ -88,6 +97,17 @@ pub fn serialize_library<F>(
                     sort: &selectable_sort.sort,
                     selected: &selectable_sort.selected,
                     deep_links: LibraryDeepLinks::from((&root, &selectable_sort.request))
+                        .into_web_deep_links(),
+                })
+                .collect(),
+            stateFilters: library
+                .selectable
+                .stateFilters
+                .iter()
+                .map(|selectable_stateFilter| model::SelectableStateFilter {
+                    stateFilter: &selectable_stateFilter.stateFilter,
+                    selected: &selectable_stateFilter.selected,
+                    deep_links: LibraryDeepLinks::from((&root, &selectable_stateFilter.request))
                         .into_web_deep_links(),
                 })
                 .collect(),
