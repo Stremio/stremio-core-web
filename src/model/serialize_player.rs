@@ -20,9 +20,9 @@ mod model {
     use super::*;
     #[derive(Serialize)]
     #[serde(rename_all = "camelCase")]
-    pub struct Stream<'a> {
+    pub struct Stream {
         #[serde(flatten)]
-        pub stream: &'a stremio_core::types::resource::Stream,
+        pub stream: stremio_core::types::resource::Stream,
         pub deep_links: StreamDeepLinks,
     }
     #[derive(Serialize)]
@@ -85,7 +85,7 @@ mod model {
     #[derive(Serialize)]
     #[serde(rename_all = "camelCase")]
     pub struct Selected<'a> {
-        pub stream: Stream<'a>,
+        pub stream: Stream,
         pub stream_request: &'a Option<ResourceRequest>,
         pub meta_request: &'a Option<ResourceRequest>,
         pub subtitles_path: &'a Option<ResourcePath>,
@@ -97,12 +97,14 @@ mod model {
         pub meta_item: Option<Loadable<model::MetaItem<'a>, &'a ResourceError>>,
         pub subtitles: Vec<model::Subtitles<'a>>,
         pub next_video: Option<Video<'a>>,
+        pub next_stream: Option<Stream>,
         pub series_info: Option<&'a stremio_core::types::resource::SeriesInfo>,
         pub library_item: Option<LibraryItem<'a>>,
         pub stream_state: Option<&'a StreamItemState>,
         #[serde(skip_serializing_if = "Option::is_none")]
         pub intro_outro: Option<&'a stremio_core::types::player::IntroOutro>,
         pub title: Option<String>,
+        /// The stream request Descriptor Preview
         pub addon: Option<model::DescriptorPreview<'a>>,
     }
 }
@@ -111,7 +113,7 @@ pub fn serialize_player(player: &Player, ctx: &Ctx, streaming_server: &Streaming
     <JsValue as JsValueSerdeExt>::from_serde(&model::Player {
         selected: player.selected.as_ref().map(|selected| model::Selected {
             stream: model::Stream {
-                stream: &selected.stream,
+                stream: selected.stream.to_owned(),
                 deep_links: StreamDeepLinks::from((
                     &selected.stream,
                     &streaming_server.base_url,
@@ -187,7 +189,7 @@ pub fn serialize_player(player: &Player, ctx: &Ctx, streaming_server: &Streaming
             .as_ref()
             .and_then(|selected| selected.meta_request.as_ref())
             .zip(player.next_video.as_ref())
-            .map(|(request, video)| model::Video {
+            .map(|(request, (_video_request, video))| model::Video {
                 video,
                 upcoming: player
                     .meta_item
@@ -225,6 +227,68 @@ pub fn serialize_player(player: &Player, ctx: &Ctx, streaming_server: &Streaming
                 ))
                 .into_web_deep_links(),
             }),
+        next_stream: {
+            match (player.next_stream.clone(), player.next_video.as_ref()) {
+                (
+                    Some((ref next_stream_request, mut next_stream)),
+                    Some((next_video_request, next_video)),
+                ) => {
+                    let next_stream = {
+                        // if there's a loaded meta it will override the Name of the stream
+                        // to include the name of the MetaItem and season/episode for series
+                        let name = match player.meta_item.as_ref() {
+                            Some(resource) => match resource.content.as_ref() {
+                                Some(Loadable::Ready(meta_item))
+                                    if meta_item
+                                        .preview
+                                        .behavior_hints
+                                        .default_video_id
+                                        .is_none() =>
+                                {
+                                    match &next_video.series_info {
+                                        Some(series_info) => Some(format!(
+                                            "{meta_name} - {video_title} ({season}x{episode})",
+                                            meta_name = &meta_item.preview.name,
+                                            video_title = &next_video.title,
+                                            episode = &series_info.episode,
+                                            season = &series_info.season,
+                                        )),
+                                        _ => Some(format!(
+                                            "{} - {}",
+                                            &meta_item.preview.name, &next_video.title
+                                        )),
+                                    }
+                                }
+                                // in any other case (like error or meta loading leave fallback)
+                                _ => None,
+                            },
+                            // no loaded meta, skip the meta (fallback)
+                            None => None,
+                        }
+                        .or_else(|| next_stream.name.clone())
+                        .unwrap_or(next_video.title.to_owned());
+                        next_stream.name = Some(name);
+
+                        next_stream
+                    };
+
+                    let stream_deep_links = StreamDeepLinks::from((
+                        &next_stream,
+                        next_stream_request,
+                        next_video_request,
+                        &streaming_server.base_url,
+                        &ctx.profile.settings,
+                    ))
+                    .into_web_deep_links();
+
+                    Some(model::Stream {
+                        stream: next_stream.to_owned(),
+                        deep_links: stream_deep_links,
+                    })
+                }
+                _ => None,
+            }
+        },
         series_info: player.series_info.as_ref(),
         library_item: player
             .library_item
