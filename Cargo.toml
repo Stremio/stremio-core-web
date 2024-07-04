@@ -61,6 +61,10 @@ tracing-wasm = "0.2"
 [dev-dependencies]
 wasm-bindgen-test = "0.3.0"
 
+# iOS 14 Safari does not support these WASM instructions
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["--signext-lowering"]
+
 # A way to quickly test with local version of `core` crates
 # [patch.'https://github.com/Stremio/stremio-core']
 # stremio-core = { path = "../core" }
